@@ -4,7 +4,7 @@ import xml.etree.ElementTree as etree
 
 
 DIR = "/Users/cmd/Desktop/BAK/Evernote"
-NOTEBOOK = "foo"
+NOTEBOOK = "tab"
 
 
 def _find_notebook(name):
@@ -24,24 +24,28 @@ def parse_enex(enex_path):
         _get_list(enex_path)
     ]
 
-
 def elements_to_dict(elements):
+    # return [x.text for x in elements if x.tag == 'title']
     return dict(
         [(x.tag, x.text) for x in elements]
     )
 
 
-def collate_notes(list_of_notes):
+def collate_notes(notes):
     note = []
-    note.append(list_of_notes.pop(0))        
+    note.append(notes.pop(0))        
 
-    for i in range(len(list_of_notes)):
-        if list_of_notes[i].tag == 'title':
-            return elements_to_dict(note), collate_notes(list_of_notes[i:])
+    for i in range(len(notes)):
+        if notes[i].tag == 'title':
+            child = collate_notes(
+                notes[i:]
+            )
+            return child + [elements_to_dict(note),]
+        elif notes[i].tag == 'data':
+            pass
         else:
-            note.append(list_of_notes[i])
-
-    return elements_to_dict(note)
+            note.append(notes[i])
+    return [elements_to_dict(note),]
 
 
 def write_note(note):
@@ -49,14 +53,11 @@ def write_note(note):
 
 
 def go():
-    return [write_note(note)
-            for note
-            in collate_notes(
-                parse_enex(
-                    _find_notebook(NOTEBOOK)
-                )
+    return collate_notes(
+            parse_enex(
+                _find_notebook(NOTEBOOK)
             )
-    ]
+        )
     
 
 if __name__ == '__main__':
