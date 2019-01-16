@@ -7,7 +7,7 @@ import xml.etree.ElementTree as etree
 
 SRCDIR = "/Users/cmd/Desktop/BAK/Evernote"
 DSTDIR = "/Users/cmd/tmp/Evernote"
-NOTEBOOK = "Zek"
+NOTEBOOK = "Tab"
 
 
 
@@ -26,6 +26,22 @@ def _make_dir_if_not_exists(d):
     return d
 
 
+def _remove_spaces(string):
+    return string.replace(' ', '_')
+
+
+def _remove_slashes(string):
+    return string.replace('/', '\/')
+
+
+def _sanitize(string):
+    return _remove_spaces(
+        _remove_slashes(
+            string
+        )
+    )
+
+
 def _prep_output_dir(outputdir):
     return _make_dir_if_not_exists(outputdir)
     
@@ -41,7 +57,7 @@ def _find_filename(note):
     ]:
         filename = note.get(fn)
         if filename:
-            return filename
+            return _sanitize(filename)
 
 
 def parse_enex(enex_path):
@@ -79,11 +95,15 @@ def collate_notes(notes):
 
 
 def write_note(note, notebook_dir):
-    return "Writing {} to {}/{}.".format(
-        note.get('title'),
-        notebook_dir,
+    return "Writing {}/{}".format(
+        _prep_output_dir(
+            '{}/{}'.format(
+                notebook_dir,
+                _sanitize(note.get('title')),
+            )
+        ),
         _find_filename(note)
-    ) 
+    )
 
 
 def write_notebook(notebook_name, notes):
@@ -96,6 +116,7 @@ def write_notebook(notebook_name, notes):
         )
         for note
         in notes
+        if not note.get('en-export')
     ]
         
 
