@@ -60,6 +60,18 @@ def _find_filename(note):
             return _sanitize(filename)
 
 
+def _find_full_note_path(note, notebook_dir):
+    return "{}/{}".format(
+        _prep_output_dir(
+            '{}/{}'.format(
+                notebook_dir,
+                _sanitize(note.get('title')),
+            )
+        ),
+        _find_filename(note)
+    )
+    
+
 def parse_enex(enex_path):
     return [
         element
@@ -95,15 +107,19 @@ def collate_notes(notes):
 
 
 def write_note(note, notebook_dir):
-    return "Writing {}/{}".format(
-        _prep_output_dir(
-            '{}/{}'.format(
-                notebook_dir,
-                _sanitize(note.get('title')),
+        with open(
+                _find_full_note_path(
+                    note,
+                    notebook_dir
+                ),
+                'w'
+        ) as fh:
+            fh.write(
+                note.get(
+                    'content'
+                )
             )
-        ),
-        _find_filename(note)
-    )
+        return
 
 
 def write_notebook(notebook_name, notes):
