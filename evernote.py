@@ -7,7 +7,7 @@ import xml.etree.ElementTree as etree
 
 SRCDIR = "/Users/cmd/Desktop/BAK/Evernote"
 DSTDIR = "/Users/cmd/tmp/Evernote"
-NOTEBOOK = "Tab"
+NOTEBOOK = "Zek"
 
 
 
@@ -31,7 +31,7 @@ def _remove_spaces(string):
 
 
 def _remove_slashes(string):
-    return string.replace('/', '\/')
+    return string.replace('/', '|')
 
 
 def _sanitize(string):
