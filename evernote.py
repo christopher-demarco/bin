@@ -72,6 +72,8 @@ def _find_full_note_path(note, notebook_dir):
     )
     
 
+
+
 def parse_enex(enex_path):
     return [
         element
@@ -107,19 +109,19 @@ def collate_notes(notes):
 
 
 def write_note(note, notebook_dir):
-        with open(
-                _find_full_note_path(
-                    note,
-                    notebook_dir
-                ),
-                'w'
-        ) as fh:
-            fh.write(
-                note.get(
-                    'content'
-                )
+    with open(
+            _find_full_note_path(
+                note,
+                notebook_dir
+            ),
+            'w'
+    ) as fh:
+        fh.write(
+            _get_raw_content(
+                note
             )
-        return
+        )
+    return
 
 
 def write_notebook(notebook_name, notes):
