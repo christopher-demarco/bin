@@ -1,10 +1,12 @@
 #!/usr/bin/env python3
 
+from datetime import datetime
 import sys
 
 
 page_on = int(input("Current page? "))
-day_of_year = int(input("Day of year? "))
+day_of_year = datetime.now().timetuple().tm_yday
+#day_of_year = int(input("Day of year? "))
 
 book_len = 250
 pages_remaining = 365 - book_len
