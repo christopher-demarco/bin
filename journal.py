@@ -20,5 +20,5 @@ expected_pages_used = int(months_remaining * pages_per_month)
 
 print(f"{days_remaining} days ({months_remaining} months) to fill {book_len - page_on} pages.")
 print(f"Averaging one page per day, expect {expected_pages_used} pages on daily logs, leaving {pages_remaining - expected_pages_used} free.")
-
+print(f"At this rate, the year will finish on page {book_len - expected_pages_used}.")
 
