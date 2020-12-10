@@ -10,7 +10,7 @@ else:
     page_on = int(sys.argv[1])
 day_of_year = datetime.now().timetuple().tm_yday
 
-book_len = 250
+book_len = 250 - 23 # perforated pages at the end
 pages_remaining = book_len - page_on
 
 days_remaining = 365 - day_of_year
