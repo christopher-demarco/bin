@@ -26,5 +26,5 @@ expected_unwritten_percent = expected_unwritten_pages / book_len * 100
 
 print(f"{days_remaining} days remain to fill {pages_remaining} pages.")
 print(f"Averaging one page per weekday, expect {expected_pages_used} pages to be written.")
-print(f"Thus the year will finish on page {expected_end_page}, leaving {expected_unwritten_pages} ({expected_unwritten_percent}%) unwritten.")
+print(f"Thus the year will finish on page {expected_end_page}, leaving {expected_unwritten_pages} ({round(expected_unwritten_percent)}%) unwritten.")
 
